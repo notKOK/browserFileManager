@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>File Manager</title>
+    </head>
+    <body>
+        <h1>File Manager</h1>
+        <h2>Current Directory: {{.CurrPath}}</h2>
+    <ul>
+        {{range .Files}}
+        <li>
+            {{if .IsDir}}
+            <a href="{{.Name}}/">{{.Name}}</a>
+            {{else}}
+            {{.Name}}
+            {{end}}
+            <a href="/delete?name={{.Name}}">Delete</a>
+            <a href="/rename?name={{.Name}}">Rename</a>
+            {{if not .IsDir}}
+            <a href="/download?name={{.Name}}">Download</a>
+            {{end}}
+        </li>
+        {{end}}
+    </ul>
+    <form action="/create" method="POST">
+        <label for="newName">New folder name:</label>
+        <input type="text" id="newName" name="newName" required>
+        <input type="submit" value="Create">
+    </form>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label for="file">Upload File:</label>
+        <input type="file" id="file" name="file" required>
+        <input type="submit" value="Upload">
+    </form>
+    </body>
+</html>
